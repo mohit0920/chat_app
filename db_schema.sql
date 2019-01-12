@@ -10,8 +10,10 @@ create table users (
   first_name varchar(255) not null,
   last_name varchar(255) not null,
   sex char(1) not null,
-  dob timestamp not null
-  );
+  dob timestamp not null,
+  contact_number numeric(10) not null,
+  created_at timestamp not null default now()
+                   );
 
 create table messages (
   sent_by int not null,

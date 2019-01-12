@@ -1,0 +1,23 @@
+{
+  "name": "chat_app",
+  "version": "1.0.0",
+  "description": "\"basic chatting app\"",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/moh1t/chat_app.git"
+  },
+  "author": "Mohit Juneja",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/moh1t/chat_app/issues"
+  },
+  "homepage": "https://github.com/moh1t/chat_app#readme",
+  "dependencies": {
+    "faker": "^4.1.0",
+    "mysql": "^2.16.0"
+  }
+}
