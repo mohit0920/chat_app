@@ -10,16 +10,17 @@ create table users (
   first_name varchar(255) not null,
   last_name varchar(255) not null,
   sex char(1) not null,
-  dob timestamp not null,
+  dob date not null,
   contact_number numeric(10) not null,
   created_at timestamp not null default now()
                    );
 
-create table messages (
+create table messages
+(
   sent_by int not null,
   received_by int not null,
   sent_at timestamp not null default now(),
   content text not null ,
   foreign key (sent_by) references users(user_id),
   foreign key (received_by) references users(user_id)
-                      );
+);

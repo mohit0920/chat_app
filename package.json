@@ -17,6 +17,7 @@
   },
   "homepage": "https://github.com/moh1t/chat_app#readme",
   "dependencies": {
+    "express": "^4.16.4",
     "faker": "^4.1.0",
     "mysql": "^2.16.0"
   }
