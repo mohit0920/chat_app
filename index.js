@@ -41,7 +41,8 @@ passport.use(new LocalStrategy(
 
         var check_query = 'select user_id, username from users where (username = ?) && (password= ?)'
         connection.query(check_query, [credentials.username, credentials.password], (err, results ) => {
-
+            if(err) throw err
+            connection.on('error', function() {})
             try {
 
 
@@ -50,9 +51,10 @@ passport.use(new LocalStrategy(
                     return done(null, user)
                 }
         }
-        catch {
-                res.redirect('/')
+        catch (err) {
+                return done(null, false)
         }
+
 
     }
 )}))
@@ -60,7 +62,7 @@ passport.use(new LocalStrategy(
 passport.serializeUser((user, done) => {
     console.log('Inside serializeUser callback. User id is save to the session file store here')
     done(null, user.id);
-});
+})
 
 passport.deserializeUser((id, done) => {
     console.log('Inside deserializeUser callback')
@@ -80,7 +82,7 @@ passport.deserializeUser((id, done) => {
 
     var check_query = 'select user_id, username from users where (user_id = ? )'
     connection.query(check_query, [id], (err, results ) => {
-
+        connection.on('error', function() {})
         try {
 
 
@@ -89,8 +91,8 @@ passport.deserializeUser((id, done) => {
                 return done(null, user)
             }
         } catch {
-            var user = false
-            return done(null, user)
+
+            return done(null, false)
         }
 
     })
@@ -111,16 +113,27 @@ app.get('/create', (req,res) => {
             database : 'chat_app_db'
         }
     )
-    var occupied_usernames_query = 'select username, email from users;'
+    var occupied_usernames_query = 'select username from users;'
     connection.query(occupied_usernames_query, (error, results) => {
-    //console.log(error)
+    try {
+        if (error) throw error
 
-    var occupied_usernames_and_emails_string_obj =   JSON.stringify(results)
-    res.render("create", {occupied_usernames_and_emails_string: occupied_usernames_and_emails_string_obj})
-})
-    connection.end()
-})
+
+        var occupied_usernames_and_emails_string_obj = JSON.stringify(results)
+        res.render("create", {occupied_usernames_and_emails_string: occupied_usernames_and_emails_string_obj})
+        connection.on('error', function() {})
+        connection.end()
+    }
+    catch (error) {
+        res.redirect('/')
+    }
+    })
+
+    })
+
+
 app.post('/create/create_user', (req, res) => {
+
     var connection = mysql.createConnection(
         {
             host : 'localhost',
@@ -140,9 +153,16 @@ app.post('/create/create_user', (req, res) => {
         contact_number: req.body.contact_number
     }
     var insert_query = 'insert into users set ?'
+    try {
     connection.query(insert_query, new_user, function (err, results) {
+            if(err) throw err
         res.redirect('/')
-    })
+        connection.on('error', function() {})
+
+    })}
+    catch (err) {
+        res.redirect('/create')
+    }
     connection.end()
 })
 
@@ -174,7 +194,6 @@ app.post('/login', (req, res, next) => {
             console.log('Inside req.login() callback')
             console.log(`req.session.passport: ${JSON.stringify(req.session.passport)}`)
             console.log(`req.user: ${JSON.stringify(req.user)}`)
-            //var username =req.user.username
             return res.redirect('/messages')
         })
     })(req, res, next);
@@ -194,21 +213,24 @@ app.get('/messages', (req, res) => {
             }
         )
         var logged_in_user = req.session.passport.user
-        // var find_user_id = 'select user_id from users where username = ?'
-        // connection.query(find_user_id, username, (err2, res2) => {
-        //     var logged_in_user = res2[0].user_id
 
 
         var contact_query = 'select concat(first_name, " ", last_name) as full_name, username from messages inner join users on (users.user_id = messages.sent_by ) or (users.user_id = messages.received_by) where ((sent_by = ?) or (received_by = ?)) && (users.user_id != ?) group by user_id  order by max(sent_at) desc ;'
 
-
+        try {
         connection.query(contact_query, [logged_in_user, logged_in_user, logged_in_user], (err3, res3) => {
+            if(err3) throw err3
             var contacts = res3
 
             var contacts = JSON.stringify(contacts)
             res.render('home', {contacts: contacts})
+            connection.on('error', function() {})
+            connection.end()
 
-        })
+        })}
+        catch(err3) {
+            res.redirect('/')
+        }
 
     } else {
         res.redirect('/')
@@ -229,18 +251,21 @@ app.get('/messages/:username', (req, res) => {
         var logged_user = req.session.passport.user
         var connected_username = req.params.username
         find_id_query = 'select user_id from users where username = ?'
-        connection.query(find_id_query, connected_username, (req2, res2) => {
+        connection.query(find_id_query, connected_username, (err2, res2) => {
+            if(err2) throw err2
             try {
                 var connected_user = res2[0].user_id
 
-                var messages = 'select distinct content, if (sent_by = ?,true, false) as sent, sent_at from messages where ((sent_by = ?) && (received_by = ?)) or ((sent_by = ? ) && (received_by =?))  order by sent_at desc'
+                var messages = 'select distinct content, if (sent_by = ?,true, false) as sent, sent_at from messages where ((sent_by = ?) && (received_by = ?)) or ((sent_by = ? ) && (received_by =?))  order by sent_at'
                 connection.query(messages, [logged_user, connected_user, logged_user, logged_user, connected_user], (req3, res3) => {
                     var data = [res3, connected_user]
 
                     res.render('chat', {data: JSON.stringify(data)})
+                    connection.on('error', function() {})
+                    connection.end()
                 })
             }
-            catch {
+            catch (err2) {
                 res.redirect('/messages')
 
             }
@@ -253,9 +278,8 @@ app.get('/messages/:username', (req, res) => {
         res.redirect('/')
     }
 
-});
+})
 app.post('/send', (req,res) => {
-    //res.send("Done " + req.body.user)
     if(req.isAuthenticated()) {
         var logged_user = req.session.passport.user
         var contact = req.body.user
@@ -269,16 +293,25 @@ app.post('/send', (req,res) => {
                 database: 'chat_app_db'
             }
         )
+        try {
         var send_query = 'insert into messages (sent_by, received_by, content) values (?,?,?)'
+            console.log(contact)
         connection.query(send_query, [logged_user, contact, message], (err2, res2) => {
-
+        if(err2) throw err2
         var find_username_query = 'select username from users where user_id = ?'
         connection.query(find_username_query, contact, (err3, res3) => {
+            if(err3) throw err3
             var connected_username = res3[0].username
             res.redirect('/messages/'+connected_username)
+            connection.on('error', function() {})
+            connection.end()
         })
         })
+        }
+        catch(e) {
+            res.redirect('/messages')
 
+        }
     }
     else {
         res.redirect('/')
@@ -287,8 +320,7 @@ app.post('/send', (req,res) => {
 
 app.post('/profile', (req,res) => {
     if(req.isAuthenticated()) {
-       // console.log(req.body.user)
-       //  res.send('profile looking')
+
         var connection = mysql.createConnection(
             {
                 host: 'localhost',
@@ -297,14 +329,27 @@ app.post('/profile', (req,res) => {
                 database: 'chat_app_db'
             }
         )
-        var profile_query = 'select username, email, concat(first_name, " ", last_name) as full_name, sex, dob from users where user_id = ?'
-        connection.query(profile_query, req.body.user, (err2, res2) => {
-            var profile_data =res2[0]
-            res.render('profile',{profile_data: profile_data})
-        })
+        try {
+            var profile_query = 'select username, email, concat(first_name, " ", last_name) as full_name, sex, dob from users where user_id = ?'
+            connection.query(profile_query, req.body.user, (err2, res2) => {
+                if (err2) throw err2
+                var profile_data = res2[0]
+                res.render('profile', {profile_data: profile_data})
+                connection.on('error', function() {})
+                connection.end()
+            })
+        }
+        catch(err2) {
+            res.redirect('/messages')
+        }
 
     }
+
+    else {
+        res.redirect('/')
+    }
 })
-app.listen(8009, () =>{
-    console.log('app on 8009')
+
+app.listen(8006,() => {
+    console.log('App listening to 8006')
 })

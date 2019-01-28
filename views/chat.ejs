@@ -6,16 +6,16 @@
 </head>
 <body>
 <form method="post" action="/profile">
-    <input hidden type="text" name = 'user' id = 'user'>
+    <input hidden type="text" name = 'user' id = 'userp'>
     <input type="submit" value="Profile">
 </form>
-<%-data%>
-<form method="post" action="/send">
+
+<form method="post" action="/send" id="send_message" align="right">
 
     <input hidden type="text" name = 'user' id = 'user'>
     <input type="text" placeholder="Enter Your Messages" name="message" />
 
-    <input type="Submit" value="Send">
+    <input type="Submit" value="Send" >
 </form>
 
 
@@ -26,6 +26,24 @@
     var messages = data[0]
     var contact = data[1]
     var user = document.getElementById('user')
+    var userp = document.getElementById('userp')
+
     user.value = contact
+    userp.value= contact
+
+    messages.forEach( (message) =>{
+        var div = document.createElement('div')
+        div.title = message.sent_at
+        var content = document.createTextNode(message.content)
+        if(message.sent) {
+            div.align = "right"
+             }
+        else {
+            div.align = "left"
+        }
+        div.appendChild(content)
+        var send_message = document.getElementById('send_message')
+        document.body.insertBefore(div, send_message)
+    })
 </script>
 </html>
