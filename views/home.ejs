@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+
+</head>
+<body>
+
+<!--<form method="get" onsubmit="/messages/">-->
+    <!--<input type="text" name="username" id="username">-->
+    <!--<input type="submit" value="Find">-->
+<!--</form>-->
+<input type="text" id="uname" name="uname">
+<button onclick="find()">Find</button>
+
+
+<div id="the_end">The End</div>
+
+</body>
+<script>
+    var contacts = JSON.parse('<%-contacts%>')
+    //var contacts = data.contacts
+    //var messages = data.messages
+
+    contacts.forEach( (user) => {
+        var for_user = document.createElement("a")
+        for_user.href = '/messages/' + user.username
+        var text_full_name = document.createTextNode(user.full_name)
+        var new_line = document.createElement('br')
+        for_user.appendChild(text_full_name)
+        for_user.name = user.username
+        var ending  = document.getElementById("the_end")
+        document.body.insertBefore(for_user, ending)
+        document.body.insertBefore(new_line, ending)
+
+    })
+    var find = function () {
+        var username = document.getElementById('uname')
+        location.replace('/messages/'+username.value)
+    }
+
+
+</script>
+</html>

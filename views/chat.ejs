@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Chat</title>
+</head>
+<body>
+<form method="post" action="/profile">
+    <input hidden type="text" name = 'user' id = 'user'>
+    <input type="submit" value="Profile">
+</form>
+<%-data%>
+<form method="post" action="/send">
+
+    <input hidden type="text" name = 'user' id = 'user'>
+    <input type="text" placeholder="Enter Your Messages" name="message" />
+
+    <input type="Submit" value="Send">
+</form>
+
+
+</body>
+
+<script>
+    var data = <%-data%>
+    var messages = data[0]
+    var contact = data[1]
+    var user = document.getElementById('user')
+    user.value = contact
+</script>
+</html>
