@@ -2,31 +2,75 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Title</title>
+    <title>Messages</title>
+    <link href="https://fonts.googleapis.com/css?family=Rationale|Special+Elite" rel="stylesheet">
+    <style>
+        body {
+            background-image: url("main.jpg");
+            background-size: cover;
+            background-repeat: no-repeat;
+            background-attachment: fixed;
+        }
+        input[type=text], select {
+            width: 60%;
+            padding: 30px;
+            margin: 20px;
+            display: inline-block;
+            border: 1px solid #ccc;
+            border-radius: 40px;
+            box-sizing: border-box;
+            font-size: 4em;
+        }
+        button {
+            width: 30%;
+            background-color: #67E6DC;
+            color: white;
+            padding: 30px;
+            margin: 20px;
+            border: none;
+            border-radius: 40px;
+            cursor: pointer;
+            font-size: 4em;
+            font-family: 'Rationale', sans-serif;
+        }
+        a {
 
+            width: 90%;
+            padding: 1%;
+            margin: 50px 2% 0px;
+            font-size: 6em;
+            text-decoration: none;
+            font-family: 'Special Elite', cursive;
+            color: #67E6DC;
+        }
+        a:visited {
+            color: #67E6DC;
+            text-decoration: none;
+        }
+        h1 {
+            color: #2C3335;
+            font-family: 'Rationale', sans-serif;
+            font-size: 700%;
+        }
+
+    </style>
 </head>
 <body>
-
-<!--<form method="get" onsubmit="/messages/">-->
-    <!--<input type="text" name="username" id="username">-->
-    <!--<input type="submit" value="Find">-->
-<!--</form>-->
-<input type="text" id="uname" name="uname">
+<h1 align="center">TEXTER</h1>
+<input type="text" id="uname" name="uname" placeholder="Search For Username">
 <button onclick="find()">Find</button>
 
 
-<div id="the_end">The End</div>
+<div hidden id="the_end"></div>
 
 </body>
 <script>
     var contacts = JSON.parse('<%-contacts%>')
-    //var contacts = data.contacts
-    //var messages = data.messages
 
     contacts.forEach( (user) => {
         var for_user = document.createElement("a")
         for_user.href = '/messages/' + user.username
-        var text_full_name = document.createTextNode(user.full_name)
+        var text_full_name = document.createTextNode('-> '+user.full_name)
         var new_line = document.createElement('br')
         for_user.appendChild(text_full_name)
         for_user.name = user.username

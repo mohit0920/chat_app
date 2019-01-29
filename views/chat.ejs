@@ -3,8 +3,10 @@
 <head>
     <meta charset="UTF-8">
     <title>Chat</title>
+    <link href="https://fonts.googleapis.com/css?family=Rationale|Special+Elite" rel="stylesheet">
 </head>
 <body>
+<h1 align="center">TEXTER</h1>
 <form method="post" action="/profile">
     <input hidden type="text" name = 'user' id = 'userp'>
     <input type="submit" value="Profile">
@@ -13,7 +15,7 @@
 <form method="post" action="/send" id="send_message" align="right">
 
     <input hidden type="text" name = 'user' id = 'user'>
-    <input type="text" placeholder="Enter Your Messages" name="message" />
+    <input type="text" placeholder="Enter Your Message" name="message" />
 
     <input type="Submit" value="Send" >
 </form>
@@ -36,14 +38,93 @@
         div.title = message.sent_at
         var content = document.createTextNode(message.content)
         if(message.sent) {
-            div.align = "right"
+            div.id = 'righty'
+            div.align = 'right'
+           // div.style = "width: 55%; padding: 30px; margin: 20px; display: inline-block; border: 1px solid #ccc; border-radius: 40px; box-sizing: border-box; font-size: 4em; font-family: 'Special Elite', cursive;"div
              }
         else {
-            div.align = "left"
+            div.id = 'lefty'
+            div.align = 'left'
+            //div.style = "width: 55%; padding: 30px; margin: 20px; display: inline-block; border: 1px solid #ccc; border-radius: 40px; box-sizing: border-box; font-size: 4em; font-family: 'Special Elite', cursive;"div
+
         }
         div.appendChild(content)
         var send_message = document.getElementById('send_message')
+        var new_line = document.createElement('br')
         document.body.insertBefore(div, send_message)
+        document.body.insertBefore(new_line, send_message)
     })
 </script>
+<style>
+    #lefty {
+        float: left;
+        text-align: left;
+        width: 65%;
+        padding: 30px;
+        margin: 20px;
+        display: inline-block;
+        border: 1px solid #ccc;
+        border-radius: 40px;
+        box-sizing: border-box;
+        font-size: 4em;
+        font-family: 'Special Elite', cursive;
+    }
+    #righty {
+        float: right;
+        text-align: right;
+        background: #67E6DC;
+        width: 65%;
+        padding: 30px;
+        margin: 20px;
+        display: inline-block;
+        border: 1px solid #ccc;
+        border-radius: 40px;
+        box-sizing: border-box;
+        font-size: 4em;
+        font-family: 'Special Elite', cursive;
+    }
+    body {
+        background-image: url("main.jpg");
+        background-size: auto;
+        background-repeat: no-repeat;
+        background-attachment: fixed;
+    }
+    input[type=text]{
+        width: 55%;
+        padding: 30px;
+        margin: 20px;
+        display: inline-block;
+        border: 1px solid #ccc;
+        border-radius: 40px;
+        box-sizing: border-box;
+        font-size: 4em;
+        font-family: 'Special Elite', cursive;
+    }
+    input[type=submit] {
+        width: 25%;
+        background-color: #67E6DC;
+        color: white;
+        padding: 30px;
+        margin: 20px;
+        border: none;
+        border-radius: 40px;
+        cursor: pointer;
+        font-size: 4em;
+        font-family: 'Rationale', sans-serif;
+    }
+    #userp, #user {
+        width: 0px;
+        height: 0px;
+        padding: 0px;
+        margin: 0px;
+
+        visibility: hidden;
+    }
+    h1 {
+        color: #2C3335;
+        font-family: 'Rationale', sans-serif;
+        font-size: 700%;
+    }
+
+</style>
 </html>

@@ -4,111 +4,49 @@
   <title>
     Create New Account
   </title>
-  <style>
-    h1 {
-      color: #485460;
-      font-family: courier;
-      font-size: 360%;
-      text-shadow: 2px 2px 5px black;
-      padding: 600px 50px 25px 100px
-    }
-    input[type=text], select {
-      width: 100%;
-      padding: 12px 20px;
-      margin: 8px 0;
-      display: inline-block;
-      border: 1px solid #ccc;
-      border-radius: 4px;
-      box-sizing: border-box;
-      font-size: medium;
-    }
-    input[type=password], select {
-      width: 100%;
-      padding: 12px 20px;
-      margin: 8px 0;
-      display: inline-block;
-      border: 1px solid #ccc;
-      border-radius: 4px;
-      box-sizing: border-box;
-      font-size: medium;
-    }
-    input[type=submit] {
-      width: 100%;
-      background-color: #4CAF50;
-      color: white;
-      padding: 14px 20px;
-      margin: 8px 0;
-      border: none;
-      border-radius: 4px;
-      cursor: pointer;
-      font-size: medium;
-    }
+  <link href="https://fonts.googleapis.com/css?family=Rationale|Special+Elite" rel="stylesheet">
+<style>
+  body {
+    background-image: url("login.jpg");
+    background-size: cover;
+    background-repeat: no-repeat;
+  }
+  h1 {
+    color: #DAE0E2;
+    font-family: 'Rationale', sans-serif;
+    font-size: 700%;
+  }
+  #main {
+    width: 70%;
+  }
+  input[type=submit], input[type=reset] {
+    width: 100%;
+    background-color: #67E6DC;
+    color: white;
+    padding: 30px;
+    margin: 20px;
+    border: none;
+    border-radius: 40px;
+    cursor: pointer;
+    font-size: 4em;
+    font-family: 'Rationale', sans-serif;
 
-    input[type=submit]:hover {
-      background-color: #45a049;
-    }
+  }
+  input[type=submit]:hover, input[type=reset]:hover {
+    background-color: #616C6F;
+  }
+  input[type=text], select,input[type=email], input[type=date], input[type=tel], input[type=password]{
+    width: 100%;
+    padding: 30px;
+    margin: 20px;
+    display: inline-block;
+    border: 1px solid #ccc;
+    border-radius: 40px;
+    box-sizing: border-box;
+    font-size: 4em;
+  }
 
-    input[type=date], select {
-      width: 100%;
-      padding: 12px 20px;
-      margin: 8px 0;
-      display: inline-block;
-      border: 1px solid #ccc;
-      border-radius: 4px;
-      box-sizing: border-box;
-      font-size: medium;
-    }
-    input[type=email], select {
-      width: 100%;
-      padding: 12px 20px;
-      margin: 8px 0;
-      display: inline-block;
-      border: 1px solid #ccc;
-      border-radius: 4px;
-      box-sizing: border-box;
-      font-size: medium;
-    }
-    input[type=tel], select {
-      width: 100%;
-      padding: 12px 20px;
-      margin: 8px 0;
-      display: inline-block;
-      border: 1px solid #ccc;
-      border-radius: 4px;
-      box-sizing: border-box;
-      font-size: medium;
-    }
-    input[type=reset], select {
-      width: 100%;
-      padding: 12px 20px;
-      margin: 8px 0;
-      display: inline-block;
-      border: 1px solid #ccc;
-      border-radius: 4px;
-      box-sizing: border-box;
-      font-size: medium;
-    }
-
-
-
-    .style {
-
-      width: 400px;
-      height: 900px;
-      /*padding: 10px;*/
-
-      margin: auto;
-      line-height: 1.6;
-      background-color :#53E0BC;
-      border-radius: 25px;
-      /* box-sizing: border-box;*/
-      padding: 25px 50px 25px 50px
-
-
-
-
-    }
-  </style>
+</style>
   <script>
 
     var securePassword = function() {
@@ -230,47 +168,47 @@
 
  
 </head>
-<body style="background-color:#1BCA9B;">
+<body>
 <center>
     <h1> TEXTER </h1>
   <br />
-<div class="style">
+<div id="main">
   <form method="post" name="sign_up_form" action="/create/create_user">
     <table>
       <tr>
         <td>
-          <label for="first_name" >First Name</label>
-          <br />
+          <!--<label for="first_name" >First Name</label>-->
+          <!--<br />-->
           <input placeholder="Enter your First Name" name="first_name" type="text" required />
           <br />
 
-          <label for="last_name" >Last Name</label>
-          <br />
+          <!--<label for="last_name" >Last Name</label>-->
+          <!--<br />-->
           <input placeholder="Enter your Last Name" name="last_name" type="text" required />
           <br />
 
-          <label for="username" >Username</label>
-          <br />
+          <!--<label for="username" >Username</label>-->
+          <!--<br />-->
           <input id="username" placeholder="Choose Your username" name="username" type="text" required onkeyup="check_username();"/>
           <br />
           <span id = valid_username ></span>
           <br />
 
-          <label for="dob">Date of Birth</label>
-          <br />
-          <input type="date" name="dob" max="2010-01-01" required/>
+          <!--<label for="dob">Date of Birth</label>-->
+          <!--<br />-->
+          <input type="date" name="dob" max="2010-01-01" placeholder="Birthday" required/>
           <br />
 
-          <label for="contact_number">Phone Number</label>
-          <br />
+          <!--<label for="contact_number">Phone Number</label>-->
+          <!--<br />-->
           <select name="extension" required  style="width: 28%;">
             <option value="+91">India(+91)</option>
             <option value="+92">Pakistan(+92)</option>
           </select>
-          <input type="tel" name="contact_number" placeholder="Enter your phone number" required  style="width: 70%;" >
+          <input type="tel" name="contact_number" placeholder="Enter your phone number" required  style="width: 62%;" >
           <br/>
 
-          <label for="sex">Sex : </label>
+          <!--<label for="sex">Sex : </label>-->
           <select name="sex" required>
             <option value="M">Male</option>
             <option value="F">Female</option>
@@ -278,21 +216,21 @@
           </select>
           <br />
 
-          <label for="email">Email</label>
-          <br />
+          <!--<label for="email">Email</label>-->
+          <!--<br />-->
           <input type="email" name="email" placeholder="Enter Email" required/>
           <br />
 
-          <label for="password">Password</label>
-          <br />
+          <!--<label for="password">Password</label>-->
+          <!--<br />-->
           <input type="password" name="password" id="password"placeholder="Enter New Password"  onkeyup="securePassword();" title="A Valid Password must contain at least one number and one uppercase and lowercase letter, and at least 8 or more characters, and one or more special charactors (#,$,%,&,@)."required/>
           <br />
 
           <span id="validityMessage"></span>
           <br />
 
-          <label for="confirmPassword">Confirm Password</label>
-          <br />
+          <!--<label for="confirmPassword">Confirm Password</label>-->
+          <!--<br />-->
           <input type="password" name="confirmPassword" id="confirmPassword" placeholder="Confirm Your Password" onkeyup="check();" required/>
           <br />
 

@@ -3,14 +3,56 @@
 <head>
     <meta charset="UTF-8">
     <title>Profile</title>
+    <style>
+        h1 {
+            color: #DAE0E2;
+            font-family: 'Rationale', sans-serif;
+            font-size: 700%;
+        }
+        body {
+            background-image: url("login.jpg");
+            background-size: cover;
+            background-repeat: no-repeat;
+            text-align: center;
+            color: whitesmoke;
+        }
+
+
+    </style>
 </head>
 <body>
-<h1><%-profile_data.full_name%></h1>
-<h2><%-profile_data.username%></h2>
-email: <%-profile_data.email%><br>
-BirthDay: <%-profile_data.dob%><br>
-Sex: <%-profile_data.sex%><br>
+<h1 align="center">TEXTER</h1>
+<h2 align="center"><%-profile_data.full_name%></h2>
+<h3 align="center">@<%-profile_data.username%></h3>
+   <h4>
+           <img src="https://img.icons8.com/color/48/000000/gmail.png"><br><%-profile_data.email%><br>
+           <img src="https://img.icons8.com/color/48/000000/gift.png"><div id="dob"></div>
 
 
+    </h4>
+
+<div id="ending"></div>
 </body>
+<script>
+    var date = new Date('<%-profile_data.dob%>')
+    var dob = date.toDateString()
+    document.getElementById('dob').innerHTML= dob
+    var sex = document.createElement('img')
+    var end = document.getElementById('ending')
+
+    if('<%-profile_data.sex%>' == 'F') {
+        sex.src = "https://img.icons8.com/color/48/000000/female.png"
+
+    }
+    else if ('<%-profile_data.sex%>' == 'M') {
+        sex.src = "https://img.icons8.com/color/48/000000/male.png"
+
+    }
+    else {
+
+    }
+
+        document.body.insertBefore(sex, ending)
+
+</script>
 </html>

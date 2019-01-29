@@ -1,21 +1,80 @@
 <!DOCTYPE html>
 <html>
     <head>
-    <title>chat_app</title>
+        <title>Login</title>
+        <link href="https://fonts.googleapis.com/css?family=Rationale|Special+Elite" rel="stylesheet">
+        <style>
+            h1 {
+                color: #DAE0E2;
+                font-family: 'Rationale', sans-serif;
+                font-size: 700%;
+            }
+            #main {
+                width: 70%;
+                margin: 0;
+                position: absolute;
+                top: 45%;
+                left: 50%;
+                -ms-transform: translate(-50%, -50%);
+                transform: translate(-50%, -50%);
+            }
+            input[type=submit] {
+                width: 100%;
+                background-color: #67E6DC;
+                color: white;
+                padding: 30px;
+                margin: 20px;
+                border: none;
+                border-radius: 40px;
+                cursor: pointer;
+                font-size: 4em;
+                font-family: 'Rationale', sans-serif;
+
+            }
+
+            input[type=submit]:hover {
+                background-color: #616C6F;
+            }
+            input[type=text], select {
+                width: 100%;
+                padding: 30px;
+                margin: 20px;
+                display: inline-block;
+                border: 1px solid #ccc;
+                border-radius: 40px;
+                box-sizing: border-box;
+                font-size: 4em;
+            }
+            input[type=password], select {
+                width: 100%;
+                padding: 30px;
+                margin: 20px;
+                display: inline-block;
+                border: 1px solid #ccc;
+                border-radius: 40px;
+                box-sizing: border-box;
+                font-size: 4em;
+            }
+            body {
+                background-image: url("login.jpg");
+                background-size: cover;
+                background-repeat: no-repeat;
+            }
+        </style>
     </head>
-      <body style="background-color:#1BCA9B">
+      <body>
     
     <h1 align="center">TEXTER</h1>
-    <div class="style">
+    <div id="main">
         <form method="post" action="/login" >
-          <label for="username">User Name</label>
-                <input type="text" name="username" id="username" placeholder="Enter Your Username">
-            <label for="password">Password</label>
-                <input type="password" name="password" id="password" placeholder="Shh. Secret..">
-                <input type="submit" value="Login" placeholder="Login">
+          <!--<label for="username">User Name</label><br>-->
+                <input type="text" name="username" id="username" placeholder="Enter Your Username"><br>
+            <!--<label for="password">Password</label><br>-->
+                <input type="password" name="password" id="password" placeholder="Shh. Secret.."><br>
+                <input type="submit" value="Login" placeholder="Login"><br>
         </form>
         <form method="get" action="/create">
-            <input type="submit" value="Don't have any account create one.">
+            <input type="submit" value="Don't have any account create one."><br>
 
         </form>
     </div>
